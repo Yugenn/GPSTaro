@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdOffer;
+use App\Models\JobOfferView;
 use App\Models\Area;
 use App\Http\Requests\AdOfferRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AdOfferController extends Controller
 {
@@ -14,9 +18,28 @@ class AdOfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = '';
+        foreach (config('fortify.users') as $guard) {
+            if (Auth::guard(Str::plural($guard))->check()) {
+                $user = Auth::guard(Str::plural($guard))->user();
+            }
+        }
+
+        if (empty($user)) {
+            return view('welcome');
+        } else {
+            $params = $request->query();
+            $adOffers = AdOffer::search($params)->openData()
+                ->with(['company', 'area'])->latest()->paginate(5);
+
+            $area = $request->area;
+            $adOffers->appends(compact('area'));
+            $areas = Area::all();
+
+            return view('ad_offers.index', compact('adOffers', 'areas'));
+        }
     }
 
     /**

@@ -14,9 +14,8 @@ use App\Http\Controllers\AdOfferController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [AdOfferController::class, 'index'])
+    ->name('root');
 
 Route::resource('ad_offers', AdOfferController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
