@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdOfferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::resource('ad_offers', AdOfferController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth:companies');
+
+Route::resource('ad_offers', AdOfferController::class)
+    ->only(['show', 'index'])
+    ->middleware('auth:companies,users');
 
 require __DIR__ . '/auth.php';

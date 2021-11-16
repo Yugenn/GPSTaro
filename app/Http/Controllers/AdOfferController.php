@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdOffer;
+use App\Models\Area;
 use Illuminate\Http\Request;
 
 class AdOfferController extends Controller
@@ -24,7 +25,8 @@ class AdOfferController extends Controller
      */
     public function create()
     {
-        //
+        $areas = Area::all();
+        return view('ad_offers.create', compact('areas'));
     }
 
     /**

@@ -9,6 +9,13 @@ class AdOffer extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'area_id',
+        'reamaining_amount',
+        'description',
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
