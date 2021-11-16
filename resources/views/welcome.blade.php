@@ -67,6 +67,7 @@
                                             class="hover:text-blue-500 no-underline hover:underline cursor-pointer transition ease-in duration-300">Sign
                                             up</a>
                                     </p>
+                                    
                                 </div>
                             </div>
                         </div>
