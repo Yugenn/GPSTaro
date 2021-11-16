@@ -30,14 +30,20 @@
             <p class="text-gray-700 text-base">{!! nl2br(e($adOffer->description)) !!}</p>
         </article>
         <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center my-4">
-            <a href="{{ route('ad_offers.edit', $adOffer) }}"
-                class="bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 sm:mr-2 mb-2 sm:mb-0">編集</a>
-            <form action="{{ route('ad_offers.destroy', $adOffer) }}" method="post" class="w-full sm:w-32">
-                @csrf
-                @method('DELETE')
-                <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
-                    class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
-            </form>
+            @if (Auth::guard(CompanyConst::GUARD)->check() &&
+                Auth::guard(CompanyConst::GUARD)->user()->can('update', $adOffer))
+                <a href="{{ route('ad_offers.edit', $adOffer) }}"
+                    class="bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 sm:mr-2 mb-2 sm:mb-0">編集</a>
+            @endif
+            @if (Auth::guard(CompanyConst::GUARD)->check() &&
+                Auth::guard(CompanyConst::GUARD)->user()->can('delete', $adOffer))
+                <form action="{{ route('ad_offers.destroy', $adOffer) }}" method="post" class="w-full sm:w-32">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
+                        class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                </form>
+            @endif
         </div>
 
     </div>
