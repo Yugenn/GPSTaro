@@ -59,4 +59,9 @@ class Company extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function ad_offers()
+    {
+        return $this->hasMany(AdOffer::class);
+    }
 }
