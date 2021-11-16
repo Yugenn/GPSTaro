@@ -13,7 +13,7 @@ class AdOfferRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class AdOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|string|max:50',
+            'area_id' => 'required|exists:areas,id',
+            
+            'description' => 'required|string|max:2000',
+            'status' => 'nullable|boolean',
         ];
     }
 }

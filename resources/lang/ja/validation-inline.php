@@ -127,5 +127,16 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'attributes'           => [],
+    'attributes'           => [
+        'title' => 'タイトル',
+        'occupation_id' => '職種',
+        'remaining_amount' => '残り募集',
+        'description' => '詳細',
+        'status' => 'ステータス',
+    ],
+    'values' => [
+        'remaining_amount' => [
+            'yesterday' => '昨日',
+        ]
+    ]
 ];
