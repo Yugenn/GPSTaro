@@ -14,7 +14,7 @@
                 <div>
                     <span>on {{ $adOffer->created_at->format('Y-m-d') }}</span>
                     <span class="inline-block mx-1">|</span>
-                    <span>0 views</span>
+                    <span>{{ $adOffer->adOfferViews->count() }} views</span>
                 </div>
             </div>
             <p class="text-gray-700 text-base text-right">応募期限 :{{ $adOffer->remaining_amount }}</p>

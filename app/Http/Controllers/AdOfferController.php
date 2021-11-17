@@ -6,6 +6,7 @@ use App\Models\AdOffer;
 use App\Models\AdOfferView;
 use App\Consts\CompanyConst;
 use App\Models\Area;
+use App\Consts\UserConst;
 use App\Http\Requests\AdOfferRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,6 +88,12 @@ class AdOfferController extends Controller
      */
     public function show(AdOffer $adOffer)
     {
+        if (Auth::guard(UserConst::GUARD)->check()) {
+            AdOfferView::updateOrCreate([
+                'ad_offer_id' => $adOffer->id,
+                'user_id' => Auth::guard(UserConst::GUARD)->user()->id,
+            ]);
+        }
         return view('ad_offers.show', compact('adOffer'));
     }
 
