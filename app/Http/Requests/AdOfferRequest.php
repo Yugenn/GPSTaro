@@ -23,12 +23,20 @@ class AdOfferRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $route = $this->route()->getName();
+
+        $rule = [
             'title' => 'required|string|max:50',
             'area_id' => 'required|exists:areas,id',
-            
+            'remaining_amount' => 'required|after:yesterday',
             'description' => 'required|string|max:2000',
             'status' => 'nullable|boolean',
         ];
+
+        if ($route === 'ad_offer.update') {
+            $rule['remaining_amount'] = 'required|date';
+        }
+
+        return $rule;
     }
 }

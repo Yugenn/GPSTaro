@@ -1,6 +1,4 @@
-<?php
-
-use Illuminate\Support\Facades\App;
+<?php 
 
 return [
 
@@ -215,6 +213,7 @@ return [
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Http' => Illuminate\Support\Facades\Http::class,
+        'AdOfferConst' => App\Consts\AdOfferConst::class,
         'Js' => Illuminate\Support\Js::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,

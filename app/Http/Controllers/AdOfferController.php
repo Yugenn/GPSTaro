@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdOffer;
-use App\Models\JobOfferView;
+use App\Models\AdOfferView;
+use App\Consts\CompanyConst;
 use App\Models\Area;
 use App\Http\Requests\AdOfferRequest;
 use Illuminate\Http\Request;
@@ -66,6 +67,7 @@ class AdOfferController extends Controller
 
         try {
             // 登録
+            // dd($adOffer);
             $adOffer->save();
         } catch (\Exception $e) {
             return back()->withInput()
@@ -96,7 +98,8 @@ class AdOfferController extends Controller
      */
     public function edit(AdOffer $adOffer)
     {
-        //
+        $areas = Area::all();
+        return view('ad_offers.edit', compact('adOffer', 'areas'));
     }
 
     /**
@@ -108,7 +111,21 @@ class AdOfferController extends Controller
      */
     public function update(AdOfferRequest $request, AdOffer $adOffer)
     {
-        //
+        if (Auth::guard(CompanyConst::GUARD)->user()->cannot('update', $adOffer)) {
+            return redirect()->route('ad_offers.show', $adOffer)
+                ->withErrors('自分の求人情報以外は更新できません');
+        }
+        $adOffer->fill($request->all());
+
+        try {
+            $adOffer->save();
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->withErrors('求人情報更新処理でエラーが発生しました');
+        }
+
+        return redirect()->route('ad_offers.show', $adOffer)
+            ->with('notice', '求人情報を更新しました');
     }
 
     /**
@@ -119,6 +136,20 @@ class AdOfferController extends Controller
      */
     public function destroy(AdOffer $adOffer)
     {
-        //
+        
+        if (Auth::guard(CompanyConst::GUARD)->user()->cannot('delete', $adOffer)) {
+            return redirect()->route('ad_offers.show', $adOffer)
+                ->withErrors('自分の求人情報以外は削除できません');
+        }
+
+        try {
+            $adOffer->delete();
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->withErrors('求人情報削除処理でエラーが発生しました');
+        }
+
+        return redirect()->route('ad_offers.index')
+            ->with('notice', '求人情報を削除しました');
     }
 }

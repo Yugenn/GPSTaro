@@ -13,8 +13,7 @@
                 <ul>
                     <li class="mb-2"><a href="/" class="hover:text-blue-500 {{ strpos(url()->full(), 'area') ?: 'text-green-500 font-bold' }}">全て</a></li>
                     @foreach ($areas as $a)
-                        <li class="mb-2"><a href="/?area={{ $o->id }}" class="hover:text-blue-500 {{ strpos(url()->full(), 'occupation=' . $a->id) ? 'text-green-500 font-bold' : '' }}">{{ $a->name }}</a></li>
-                                class="hover:text-blue-500">{{ $a->name }}</a></li>
+                        <li class="mb-2"><a href="/?area={{ $a->id }}" class="hover:text-blue-500 {{ strpos(url()->full(), 'occupation=' . $a->id) ? 'text-green-500 font-bold' : '' }}">{{ $a->name }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -25,11 +24,11 @@
                             <div class="flex justify-between text-sm items-center mb-4">
                                 <div class="border border-gray-900 px-2 h-7 leading-7 rounded-full">
                                     {{ $j->area->name }}</div>
-                                <div class="text-gray-700 text-sm text-right">
-                                    <span>応募期限 :{{ $j->due_date }}</span>
-                                    <span class="inline-block mx-1">|</span>
-                                    <span>{{ $j->adOfferViews->count() }} views</span>
-                                </div>
+                                {{-- <div class="text-gray-700 text-sm text-right"> --}}
+                                    {{-- <span>応募期限 :{{ $j->due_date }}</span>
+                                    <span class="inline-block mx-1">|</span> --}}
+                                    {{-- <span>{{ $j->adOfferViews->count() }} views</span> --}}
+                                {{-- </div> --}}
                             </div>
                             <h2 class="text-lg text-gray-700 font-semibold">{{ $j->title }}
                             </h2>

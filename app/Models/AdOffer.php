@@ -13,8 +13,9 @@ class AdOffer extends Model
     protected $fillable = [
         'title',
         'area_id',
-        'reamaining_amount',
+        'remaining_amount',
         'description',
+        'status',
     ];
 
     public function scopeOpenData(Builder $query)
